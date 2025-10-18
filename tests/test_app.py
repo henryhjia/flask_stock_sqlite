@@ -5,11 +5,13 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 import unittest
 from unittest.mock import patch
 import pandas as pd
-from flask import Flask, SQLAlchemy, get_flashed_messages, LoginManager
+from flask import get_flashed_messages
+from app import app, db
 import os
 
 # Import models and forms from app.py for test setup
 from app import User, RegistrationForm, LoginForm, load_user, register, login, logout, index, plot, init_db_command
+class AuthTestCase(unittest.TestCase):
     def setUp(self):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
