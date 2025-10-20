@@ -153,8 +153,8 @@ class PlotTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         # Check that the data is truncated to 20 days
-        self.assertIn(b'2023-01-01', response.data)
-        self.assertNotIn(b'2023-01-21', response.data)
+        self.assertNotIn(b'2023-01-01', response.data)
+        self.assertIn(b'2023-01-30', response.data)
 
     @patch('yfinance.download')
     def test_plot_no_data(self, mock_download):

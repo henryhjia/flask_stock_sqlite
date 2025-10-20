@@ -130,9 +130,6 @@ def plot():
 
     data = data.sort_index(ascending=True)
 
-    if len(data) > 20:
-        data = data.head(20)
-
     # Calculate statistics
     min_val = data['close'].min()
     min_price = min_val.iloc[0] if isinstance(min_val, pd.Series) else min_val
@@ -143,16 +140,31 @@ def plot():
 
     # Generate the plot
     plt.figure(figsize=(10, 6))
-    plt.plot(range(len(data.index)), data['close'], marker='o')
-    plt.title(f'{ticker} Stock Price')
+    num_points = len(data.index)
+    if num_points <= 20:
+        markersize = 6
+    elif num_points <= 50:
+        markersize = 4
+    elif num_points <= 100:
+        markersize = 2
+    else:
+        markersize = 1
+    plt.plot(range(num_points), data['close'], marker='o', markersize=markersize)
+    plt.title(f'{ticker.upper()} Stock Price')
     plt.xlabel('Date')
     plt.ylabel('Price (USD)')
     plt.grid(True)
 
     # Format the x-axis to show dates
     ax = plt.gca()
-    ax.set_xticks(range(len(data.index))) # Set numerical ticks
-    ax.set_xticklabels([d.strftime('%Y-%m-%d') for d in data.index], rotation=90) # Set custom labels
+    num_points = len(data.index)
+    if num_points > 20:
+        step = num_points // 10
+        ax.set_xticks(range(0, num_points, step))
+        ax.set_xticklabels([data.index[i].strftime('%Y-%m-%d') for i in range(0, num_points, step)], rotation=90)
+    else:
+        ax.set_xticks(range(num_points))
+        ax.set_xticklabels([d.strftime('%Y-%m-%d') for d in data.index], rotation=90)
     plt.tight_layout() # Adjust layout to prevent labels from being cut off
 
 
@@ -163,7 +175,9 @@ def plot():
     plot_data = base64.b64encode(buf.getbuffer()).decode("ascii")
     plot_url = f'data:image/png;base64,{plot_data}'
 
-    data = data.sort_index(ascending=False)
+    table_data = data.sort_index(ascending=False)
+    if len(table_data) > 20:
+        table_data = table_data.head(20)
 
     formatters = {
         'open': '{:.2f}'.format,
@@ -179,7 +193,7 @@ def plot():
                            max_price=f'{max_price:.2f}',
                            mean_price=f'{mean_price:.2f}',
                            plot_url=plot_url,
-                           data_table=data.to_html(classes=['table', 'table-striped'], header="true", formatters=formatters))
+                           data_table=table_data.to_html(classes=['table', 'table-striped'], header="true", formatters=formatters))
 
 import sqlite3
 
