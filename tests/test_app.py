@@ -11,6 +11,7 @@ import os
 
 # Import models and forms from app.py for test setup
 from app import User, RegistrationForm, LoginForm, load_user, register, login, logout, index, plot, init_db_command
+from sqlalchemy import text
 class AuthTestCase(unittest.TestCase):
     def setUp(self):
         app.config['TESTING'] = True
@@ -19,11 +20,11 @@ class AuthTestCase(unittest.TestCase):
         self.app = app.test_client()
         with app.app_context():
             db.create_all()
-
     def tearDown(self):
         with app.app_context():
+            db.session.execute(text('DELETE FROM user'))
+            db.session.commit()
             db.session.remove()
-            db.drop_all()
 
     def test_register(self):
         with app.app_context():
@@ -90,8 +91,9 @@ class PlotTestCase(unittest.TestCase):
 
     def tearDown(self):
         with app.app_context():
+            db.session.execute(text('DELETE FROM user'))
+            db.session.commit()
             db.session.remove()
-            db.drop_all()
 
     @patch('yfinance.download')
     def test_plot(self, mock_download):
@@ -151,8 +153,8 @@ class PlotTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         # Check that the data is truncated to 20 days
-        self.assertIn(b'2023-01-30', response.data)
-        self.assertNotIn(b'2023-01-10', response.data)
+        self.assertIn(b'2023-01-01', response.data)
+        self.assertNotIn(b'2023-01-21', response.data)
 
     @patch('yfinance.download')
     def test_plot_no_data(self, mock_download):

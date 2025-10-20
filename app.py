@@ -128,7 +128,7 @@ def plot():
     if data.empty:
         return render_template('error.html')
 
-    data = data.sort_index(ascending=False)
+    data = data.sort_index(ascending=True)
 
     if len(data) > 20:
         data = data.head(20)
@@ -163,6 +163,7 @@ def plot():
     plot_data = base64.b64encode(buf.getbuffer()).decode("ascii")
     plot_url = f'data:image/png;base64,{plot_data}'
 
+    data = data.sort_index(ascending=False)
 
     formatters = {
         'open': '{:.2f}'.format,
