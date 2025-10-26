@@ -2,7 +2,7 @@
 ## Project Overview
 
 **Stock Price Viewer** is an enhanced version of the Stock Price Viewer application, designed to provide user authentication and secure data access.
-The application is developed with the help of AI-assisted programming using Gemini Pro 2.5, improving development speed and reliability.
+The application is developed **with the help of AI-assisted programming using Gemini Pro 2.5,** improving development speed and reliability.
 
 This app introduces a user registration and login system, ensuring that only registered users can access the stock data retrieval features.
 
