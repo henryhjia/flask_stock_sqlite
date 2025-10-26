@@ -35,21 +35,21 @@ It runs locally and does **not involve deployment to Google Cloud Platform (GCP)
 ## Running the Application Locally
   1. Activate the virtual environment 
   ```
-  $ source venv/bin/activate
+  source venv/bin/activate
   ```
   2. Install the required dependencies
   ```
-  $ pip install -r requirements.txt
+  pip install -r requirements.txt
   ```
   3. Start the Flask application
   ```
-  $ python app.py
+  python app.py
   ```
   4. Open the app in your browser to access [http://127.0.0.0:5000](http:/127/0/0/1:5000)
      **Secure Stock Data Viewer**
 
 ## Unit Test in local enrionment
 ```
-  $ pytest
+  pytest
 ```
  
