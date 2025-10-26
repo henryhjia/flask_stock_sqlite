@@ -45,7 +45,7 @@ It runs locally and does **not involve deployment to Google Cloud Platform (GCP)
   ```
   python app.py
   ```
-  4. Open the app in your browser to access [http://127.0.0.0:5000](http:/127/0/0/1:5000)
+  4. Open the app in your browser to access http://127.0.0.1:5000
      **Secure Stock Data Viewer**
 
 ## Unit Test in local enrionment
