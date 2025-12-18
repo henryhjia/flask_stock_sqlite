@@ -35,7 +35,7 @@ It runs locally and does **not involve deployment to Google Cloud Platform (GCP)
 ## Running the Application Locally
   1. Activate the virtual environment 
   ```
-  source venv/bin/activate
+  source .venv/bin/activate
   ```
   2. Install the required dependencies
   ```
